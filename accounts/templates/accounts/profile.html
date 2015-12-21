@@ -1,0 +1,53 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Profile | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ user.get_full_name }}</h1>
+</div>
+<img src="http://www.gravatar.com/avatar/{{ gravathar_hash }}" class="img-thumbnail profile-pic profile-pic-md" />
+<table class="table table-striped">
+    <tr>
+        <td>First name</td>
+        <td>: {{ user.first_name }}</td>
+    </tr>
+    <tr>
+        <td>Last name</td>
+        <td>: {{ user.last_name }}</td>
+    </tr>
+    <tr>
+        <td>Gender</td>
+        <td>: {{ user_profile.get_gender_display }}</td>
+    </tr>
+    <tr>
+        <td>Birthday</td>
+        <td>: {{ user_profile.birthday }}</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>: {{ user.email }}</td>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td>: {{ user_profile.phone }}</td>
+    </tr>
+    <tr>
+        <td>City</td>
+        <td>: {{ user_profile.city }}</td>
+    </tr><tr>
+        <td>State</td>
+        <td>: {{ user_profile.state }}</td>
+    </tr><tr>
+        <td>Country</td>
+        <td>: {{ user_profile.country }}</td>
+    </tr>
+    <tr>
+        <td>Zipcode</td>
+        <td>: {{ user_profile.zipcode }}</td>
+    </tr>
+</table>
+<p><a href="{% url 'accounts:edit_profile' %}" class="btn btn-primary">Edit Profile</a></p>
+{% endblock content %}

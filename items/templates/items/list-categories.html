@@ -1,0 +1,20 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Categories | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Categories</h1>
+</div>
+{% if user.is_staff %}<p><a href="{% url 'items:add_category' %}" class="btn btn-default btn-sm">Add New Category</a></p>{% endif %}
+{% for category in categories %}
+<h3><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></h3>
+<p>Slug: {{ category.slug }}</p>
+<p>{{ category.description |linebreaksbr |truncatechars:200 }}</p>
+<hr />
+{% empty %}
+<p>No categories found.</p>
+{% endfor %}
+{% endblock content %}

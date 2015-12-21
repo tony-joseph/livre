@@ -1,0 +1,65 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Periodical Issue: {{ periodical.title }} | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Periodical Issue: {{ periodical.title }}</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+<table class="table table-hover table-striped">
+    <tr>
+        <td>Id</td>
+        <td>: {{ periodical_issue.id }}</td>
+    </tr>
+    <tr>
+        <td>Periodical</td>
+        <td>: <a href="{{ periodical.get_absolute_url }}">{{ periodical.title }}</a></td>
+    </tr>
+    <tr>
+        <td>Date</td>
+        <td>: {{ periodical_issue.published_on |date:'d F Y' }}</td>
+    </tr>
+    <tr>
+        <td>Volume</td>
+        <td>: {{ periodical.volume }}</td>
+    </tr>
+    <tr>
+        <td>Issue</td>
+        <td>: {{ periodical.issue }}</td>
+    </tr>
+    <tr>
+        <td>Added by</td>
+        <td>: {{ periodical_issue.created_by.get_full_name }}</td>
+    </tr>
+    <tr>
+        <td>Added on</td>
+        <td>: {{ periodical_issue.created_on }}</td>
+    </tr>
+    <tr>
+        <td>Last updated by</td>
+        <td>: {{ periodical_issue.updated_by.get_full_name }}</td>
+    </tr>
+    <tr>
+        <td>Last updated on</td>
+        <td>: {{ periodical_issue.updated_on }}</td>
+    </tr>
+    <tr>
+        <td>Tags</td>
+        <td>: {{ periodical_issue.get_tags_string }}</td>
+    </tr>
+</table>
+{% if periodical_issue.remarks %}
+<blockquote>
+    <p>{{ periodical_issue.remarks }}</p>
+</blockquote>
+{% endif %}
+{% if user.is_staff %}
+<p>
+    <a href="{% url 'items:edit_periodical_issue' periodical.id periodical_issue.id %}" class="btn btn-sm btn-primary">Edit</a>
+    <a href="{% url 'items:delete_periodical_issue' periodical.id periodical_issue.id %}" class="btn btn-sm btn-danger">Delete</a>
+</p>
+{% endif %}
+{% endblock content %}

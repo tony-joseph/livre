@@ -1,0 +1,40 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Books | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Books</h1>
+</div>
+{% if user.is_staff %}<p><a href="{% url 'items:add_book_detail' %}" class="btn btn-default btn-sm">Add New Book</a></p>{% endif %}
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Category</th>
+        <th>Language</th>
+    </tr>
+    {% for book_detail in book_details %}
+    <tr>
+        <td>{{ book_detail.id }}</td>
+        <td><a href="{{ book_detail.get_absolute_url }}">{{ book_detail.title }}</a></td>
+        <td>{{ book_detail.author }}</td>
+        <td>{{ book_detail.category }}</td>
+        <td>{{ book_detail.language }}</td>
+    </tr>
+    {% empty %}
+    <p>No books found.</p>
+{% endfor %}
+</table>
+{% if book_details.has_previous or book_details.has_next %}
+<nav>
+    <ul class="pager">
+        {% if book_details.has_previous %}<li class="previous"><a href="{% url 'items:list_book_details' %}?page={{ book_details.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>{% endif %}
+        {% if book_details.has_next %}<li class="next"><a href="{% url 'items:list_book_details' %}?page={{ book_details.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>{% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,49 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>{{ book_copy.id }} | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ book_copy.id }} - {{ book_detail.title }}</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+{% if book_copy.remarks %}
+<blockquote>
+    <p>{{ book_copy.remarks |linebreaksbr }}</p>
+</blockquote>
+{% endif %}
+<table class="table table-hover table-striped">
+    <tr>
+        <td>ID</td>
+        <td>: {{ book_copy.id }}</td>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td>: {{ book_copy.get_book_status_display }}</td>
+    </tr>
+    <tr>
+        <td>Title</td>
+        <td>: <a href="{{ book_detail.get_absolute_url }}">{{ book_detail.title }}</a></td>
+    </tr>
+    <tr>
+        <td>Author</td>
+        <td>: {{ book_detail.author }}</td>
+    </tr>
+    <tr>
+        <td>Language</td>
+        <td>: {{ book_detail.language.name }}</td>
+    </tr>
+    <tr>
+        <td>Category</td>
+        <td>: {{ book_detail.category.title }}</td>
+    </tr>
+</table>
+{% if user.is_staff %}
+<p>
+    <a href="{% url 'items:edit_book_copy' book_detail.id book_copy.id %}" class="btn btn-sm btn-primary">Edit</a>
+    <a href="{% url 'items:delete_book_copy' book_detail.id book_copy.id %}" class="btn btn-sm btn-danger">Delete</a>
+</p>
+{% endif %}
+{% endblock content %}

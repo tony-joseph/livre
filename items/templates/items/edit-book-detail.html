@@ -1,0 +1,77 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Edit {{ book_detail.title }} | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Edit {{ book_detail.title }}</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+<p>Fields marked with * are required.</p>
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_title">{{ form.title.label }}</label>
+        {% if form.title.errors %}<p class="text-danger">{{ form.title.errors.as_text }}</p>{% endif %}
+        <input type="text" name="title" id="id_title" class="form-control" placeholder="Title" value="{{ book_detail.title }}" >
+    </div>
+    <div class="form-group">
+        <label for="id_author">{{ form.author.label }}</label>
+        {% if form.author.errors %}<p class="text-danger">{{ form.author.errors.as_text }}</p>{% endif %}
+        <input type="text" name="author" id="id_author" class="form-control" placeholder="Author" value="{{ book_detail.author }}" >
+    </div>
+    <div class="form-group">
+        <label for="id_description">{{ form.description.label }}</label>
+        {% if form.description.errors %}<p class="text-danger">{{ form.description.errors.as_text }}</p>{% endif %}
+        <textarea placeholder="Description" id="id_description" class="form-control" name="description" rows="8">{{ book_detail.description }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="id_category">{{ form.category.label }}</label>
+        {% if form.category.errors %}<p class="text-danger">{{ form.category.errors.as_text }}</p>{% endif %}
+        {{ form.category }}
+    </div>
+    <div class="form-group">
+        <label for="id_language">{{ form.language.label }}</label>
+        {% if form.language.errors %}<p class="text-danger">{{ form.language.errors.as_text }}</p>{% endif %}
+        {{ form.language }}
+    </div>
+    <div class="form-group">
+        <label for="id_publisher">{{ form.publisher.label }}</label>
+        {% if form.publisher.errors %}<p class="text-danger">{{ form.publisher.errors.as_text }}</p>{% endif %}
+        <input type="text" name="publisher" id="id_publisher" class="form-control" placeholder="Publisher" value="{{ book_detail.publisher }}" >
+    </div>
+    <div class="form-group">
+        <label for="id_published_on">{{ form.published_on.label }}</label>
+        {% if form.published_on.errors %}<p class="text-danger">{{ form.published_on.errors.as_text }}</p>{% endif %}
+        <input type="text" name="published_on" id="id_published_on" class="form-control" placeholder="Published on" value="{% if book_detail.published_on %}{{ book_detail.published_on |date:'Y-m-d' }}{% endif %}" >
+    </div>
+    <div class="form-group">
+        <label for="id_pages">{{ form.pages.label }}</label>
+        {% if form.pages.errors %}<p class="text-danger">{{ form.pages.errors.as_text }}</p>{% endif %}
+        <input type="text" name="pages" id="id_pages" class="form-control" placeholder="Pages" value="{{ book_detail.pages }}" >
+    </div>
+    <div class="form-group">
+        <label for="id_isbn">{{ form.isbn.label }}</label>
+        {% if form.isbn.errors %}<p class="text-danger">{{ form.isbn.errors.as_text }}</p>{% endif %}
+        <input type="text" name="isbn" id="id_isbn" class="form-control" placeholder="ISBN" value="{{ book_detail.isbn }}" >
+    </div>
+    <div class="form-group">
+        <label for="id_tags">{{ form.tags.label }}</label>
+        {{ form.tags }}
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a class="btn btn-default" href="{% url 'items:list_book_details' %}">Cancel</a>
+</form>
+{% endblock content %}
+
+{% block footer %}
+<script>
+    $(function() {
+        $('#id_category').val('{{ book_detail.category.slug }}');
+        $('#id_language').val('{{ book_detail.language.short_code }}');
+        $('#id_tags').val('{{ book_detail.get_tags_string }}');
+    });
+</script>
+{% endblock footer %}

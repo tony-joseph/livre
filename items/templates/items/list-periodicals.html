@@ -1,0 +1,31 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Periodicals | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Periodicals</h1>
+</div>
+{% if user.is_staff %}<p><a href="{% url 'items:add_periodical' %}" class="btn btn-default btn-sm">Add Periodical</a></p>{% endif %}
+{% for periodical in periodicals %}
+<h3><a href="{{ periodical.get_absolute_url }}">{{ periodical.title }}</a></h3>
+<p>
+    Category: {{ periodical.category }}
+    <br />
+    Language: {{ periodical.language }}
+</p>
+<hr />
+{% empty %}
+<p>No periodicals found.</p>
+{% endfor %}
+{% if periodicals.has_previous or periodicals.has_next %}
+<nav>
+    <ul class="pager">
+        {% if periodicals.has_previous %}<li class="previous"><a href="{% url 'items:list_periodicals' %}?page={{ periodicals.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>{% endif %}
+        {% if periodicals.has_next %}<li class="next"><a href="{% url 'items:list_periodicals' %}?page={{ periodicals.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>{% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock content %}

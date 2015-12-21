@@ -1,0 +1,23 @@
+img.profile-pic {
+    margin-bottom: 10px;
+}
+
+img.profile-pic-lg {
+    width: 240px;
+    height: 240px;
+}
+
+img.profile-pic-md {
+    width: 140px;
+    height: 140px;
+}
+
+img.profile-pic-sm {
+    width: 80px;
+    height: 80px;
+}
+
+img.profile-pic-xs {
+    width: 40px;
+    height: 40px;
+}

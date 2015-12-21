@@ -1,0 +1,95 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Book: {{ book_detail.title }} | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ book_detail.title }}</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+<table class="table table-hover table-striped">
+    <tr>
+        <td>Title</td>
+        <td>: {{ book_detail.title }}</td>
+    </tr>
+    <tr>
+        <td>Author</td>
+        <td>: {{ book_detail.author }}</td>
+    </tr>
+    <tr>
+        <td>category</td>
+        <td>: <a href="{{ book_detail.category.get_absolute_url }}">{{ book_detail.category.title }}</a></td>
+    </tr>
+    <tr>
+        <td>Language</td>
+        <td>: <a href="{{ book_detail.language.get_absolute_url }}">{{ book_detail.language.name }}</a></td>
+    </tr>
+    <tr>
+        <td>Publisher</td>
+        <td>: {{ book_detail.publisher }}</td>
+    </tr>
+    <tr>
+        <td>Published on</td>
+        <td>: {{ book_detail.published_on }}</td>
+    </tr>
+    <tr>
+        <td>Pages</td>
+        <td>: {{ book_detail.pages }}</td>
+    </tr>
+    <tr>
+        <td>ISBN</td>
+        <td>: {{ book_detail.isbn }}</td>
+    </tr>
+    <tr>
+        <td>Tags</td>
+        <td>: {{ book_detail.get_tags_string }}</td>
+    </tr>
+    <tr>
+        <td>Created by</td>
+        <td>: {{ book_detail.created_by.get_full_name }}</td>
+    </tr>
+    <tr>
+        <td>Created on</td>
+        <td>: {{ book_detail.created_on }}</td>
+    </tr>
+    <tr>
+        <td>Last updated by</td>
+        <td>: {{ book_detail.updated_by.get_full_name }}</td>
+    </tr>
+    <tr>
+        <td>Last updated on</td>
+        <td>: {{ book_detail.updated_on }}</td>
+    </tr>
+</table>
+{% if book_detail.description %}
+<blockquote>
+    <p>{{ book_detail.description }}</p>
+</blockquote>
+{% endif %}
+{% if user.is_staff %}
+<p>
+    <a href="{% url 'items:edit_book_detail' book_detail.id %}" class="btn btn-sm btn-primary">Edit</a>
+    <a href="{% url 'items:delete_book_detail' book_detail.id %}" class="btn btn-sm btn-danger">Delete</a>
+</p>
+{% endif %}
+<div class="page-header">
+    <h3>Book Copies</h3>
+</div>
+{% if user.is_staff %}<p><a href="{% url 'items:add_book_copy' book_detail.id %}" class="btn btn-sm btn-default">Add Book Copy</a></p>{% endif %}
+<table class="table table-hover table-striped table-bordered">
+    <tr>
+        <th>ID</th>
+        <td>Status</td>
+        <td>Remarks</td>
+    </tr>
+    {% for copy in book_copies %}
+    <tr>
+        <td><a href="{{ copy.get_absolute_url }}">{{ copy.id }}</a></td>
+        <td><a href="{{ copy.get_absolute_url }}">{{ copy.get_book_status_display }}</a></td>
+        <td><a href="{{ copy.get_absolute_url }}">{{ copy.remarks |truncatechars:100 }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}

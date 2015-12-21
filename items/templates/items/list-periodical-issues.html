@@ -1,0 +1,31 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Issues of {{ periodical.title }} | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Issues of {{ periodical.title }}</h1>
+</div>
+{% if user.is_staff %}<p><a href="{% url 'items:add_periodical_issue' periodical.id %}" class="btn btn-default btn-sm">Add Issue</a></p>{% endif %}
+{% for issue in periodical_issues %}
+<h3><a href="{{ issue.get_absolute_url }}">{{ issue.published_on |date:'d F Y' }}</a></h3>
+<p>
+    ID: {{ issue.id }}
+    <br />
+    Tags: {{ issue.get_tags_string }}
+</p>
+<hr />
+{% empty %}
+<p>No issues found.</p>
+{% endfor %}
+{% if periodical_issues.has_previous or periodical_issues.has_next %}
+<nav>
+    <ul class="pager">
+        {% if periodical_issues.has_previous %}<li class="previous"><a href="{% url 'items:list_periodical_issues' periodical.id %}?page={{ periodical_issues.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>{% endif %}
+        {% if periodical_issues.has_next %}<li class="next"><a href="{% url 'items:list_periodical_issues' periodical.id %}?page={{ periodical_issues.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>{% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Remove {{ user_detail.get_full_name }} | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Remove {{ user_detail.get_full_name }}</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+<p>Do you really want to remove this user? All data associated with this user will be deleted. Please enter the username of this user({{ user_detail.username }}) to confirm deletion.</p>
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form.username }}
+    </div>
+    <button type="submit" class="btn btn-primary">Confirm</button>
+    <a href="{% url 'accounts:list_users' %}" class="btn btn-default">Cancel</a>
+</form>
+{% endblock content %}

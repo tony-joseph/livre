@@ -1,0 +1,29 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Log In | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1 class="text-primary text-center">Log In</h1>
+    </div>
+    <div class="panel-body">
+        {% include 'includes/message-alert.html' %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">{{ form.username.label }}</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="password">{{ form.password.label }}</label>
+                {{ form.password }}
+            </div>
+            <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
+            <button type="submit" class="btn btn-primary">Log In</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

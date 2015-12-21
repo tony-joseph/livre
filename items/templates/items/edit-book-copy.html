@@ -1,0 +1,36 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Edit {{ book_copy.id }} | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Edit {{ book_copy.id }}</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+<p>Fields marked with * are required.</p>
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_book_status">{{ form.book_status.label }}</label>
+        {% if form.book_status.errors %}<p class="text-danger">{{ form.book_status.errors.as_text }}</p>{% endif %}
+        {{ form.book_status }}
+    </div>
+    <div class="form-group">
+        <label for="id_description">{{ form.description.label }}</label>
+        {% if form.description.errors %}<p class="text-danger">{{ form.description.errors.as_text }}</p>{% endif %}
+        <textarea placeholder="Remarks" id="id_remarks" class="form-control" name="remarks" rows="5">{{ book_copy.remarks }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a class="btn btn-default" href="{% url 'items:view_book_copy' book_detail.id book_copy.id %}">Cancel</a>
+</form>
+{% endblock content %}
+
+{% block footer %}
+<script>
+    $(function() {
+        $('#id_book_status').val('{{ book_copy.book_status }}');
+    });
+</script>
+{% endblock footer %}

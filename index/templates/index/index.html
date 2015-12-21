@@ -1,0 +1,57 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Home | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="text-primary">Stats</h3>
+    </div>
+    <table class="table table-striped table-hover">
+        <tr>
+            <td>Books</td>
+            <td>: {{ stats.books }}</td>
+        </tr>
+        <tr>
+            <td>Book Copies</td>
+            <td>: {{ stats.book_copies }}</td>
+        </tr>
+        <tr>
+            <td>Periodicals</td>
+            <td>: {{ stats.periodicals }}</td>
+        </tr>
+        <tr>
+            <td>Periodical Issues</td>
+            <td>: {{ stats.periodical_issues }}</td>
+        </tr>
+        <tr>
+            <td>Categories</td>
+            <td>: {{ stats.categories }}</td>
+        </tr>
+        <tr>
+            <td>Languages</td>
+            <td>: {{ stats.languages }}</td>
+        </tr>
+    </table>
+</div>
+{% endblock content %}
+
+{% block sidebar %}
+{% if user.is_staff %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Quick Links</h4>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item"><a href="{% url 'circulations:add_circulation' %}">Issue Book</a></li>
+        <li class="list-group-item"><a href="{% url 'circulations:return_circulation' %}">Return Book</a></li>
+        <li class="list-group-item"><a href="{% url 'items:add_book_detail' %}">Add Book</a></li>
+        <li class="list-group-item"><a href="{% url 'items:add_periodical' %}">Add Periodical</a></li>
+        <li class="list-group-item"><a href="{% url 'items:add_category' %}">Add Category</a></li>
+        <li class="list-group-item"><a href="{% url 'items:add_language' %}">Add Language</a></li>
+    </ul>
+</div>
+{% endif %}
+{% endblock sidebar %}

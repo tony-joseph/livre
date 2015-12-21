@@ -1,0 +1,61 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Edit Issue of {{ periodical.title }} | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Edit Issue of {{ periodical.title }}</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+<p>Fields marked with * are required.</p>
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_issue_status">{{ form.issue_status.label }}</label>
+        {% if form.issue_status.errors %}<p class="text-danger">{{ form.issue_status.errors.as_text }}</p>{% endif %}
+        {{ form.issue_status }}
+    </div>
+    <div class="form-group">
+        <label for="id_published_on">{{ form.published_on.label }}</label>
+        {% if form.published_on.errors %}<p class="text-danger">{{ form.published_on.errors.as_text }}</p>{% endif %}
+        {{ form.published_on }}
+    </div>
+    <div class="form-group">
+        <label for="id_volume">{{ form.volume.label }}</label>
+        {% if form.volume.errors %}<p class="text-danger">{{ form.volume.errors.as_text }}</p>{% endif %}
+        {{ form.volume }}
+    </div>
+    <div class="form-group">
+        <label for="id_issue">{{ form.issue.label }}</label>
+        {% if form.issue.errors %}<p class="text-danger">{{ form.issue.errors.as_text }}</p>{% endif %}
+        {{ form.issue }}
+    </div>
+    <div class="form-group">
+        <label for="id_tags">{{ form.tags.label }}</label>
+        {% if form.tags.errors %}<p class="text-danger">{{ form.tags.errors.as_text }}</p>{% endif %}
+        {{ form.tags }}
+    </div>
+    <div class="form-group">
+        <label for="id_remarks">{{ form.remarks.label }}</label>
+        {% if form.remarks.errors %}<p class="text-danger">{{ form.remarks.errors.as_text }}</p>{% endif %}
+        {{ form.remarks }}
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a class="btn btn-default" href="{{ periodical.get_absolute_url }}">Cancel</a>
+</form>
+{% endblock content %}
+
+{% block footer %}
+<script>
+    $(function() {
+        $('#id_issue_status').val('{{ periodical_issue.issue_status }}');
+        $('#id_published_on').val('{{ periodical_issue.published_on |date:'Y-m-d' }}');
+        $('#id_volume').val('{{ periodical_issue.volume }}');
+        $('#id_issue').val('{{ periodical_issue.issue }}');
+        $('#id_remarks').val('{{ periodical_issue.remarks }}');
+        $('#id_tags').val('{{ periodical_issue.get_tags_string }}');
+    });
+</script>
+{% endblock footer %}

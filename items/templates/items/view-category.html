@@ -1,0 +1,49 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Category: {{ category.title }} | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ category.title }}</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+{% if category.description %}
+<blockquote>
+    <p>{{ category.description }}</p>
+</blockquote>
+{% endif %}
+<table class="table table-hover table-striped">
+    <tr>
+        <td>Category title</td>
+        <td>: {{ category.title }}</td>
+    </tr>
+    <tr>
+        <td>Category slug</td>
+        <td>: {{ category.slug }}</td>
+    </tr>
+    <tr>
+        <td>Created by</td>
+        <td>: {{ category.created_by.get_full_name }}</td>
+    </tr>
+    <tr>
+        <td>Created on</td>
+        <td>: {{ category.created_on }}</td>
+    </tr>
+    <tr>
+        <td>Last updated by</td>
+        <td>: {{ category.updated_by.get_full_name }}</td>
+    </tr>
+    <tr>
+        <td>Last updated on</td>
+        <td>: {{ category.updated_on }}</td>
+    </tr>
+</table>
+{% if user.is_staff %}
+<p>
+    <a href="{% url 'items:edit_category' category.slug %}" class="btn btn-sm btn-primary">Edit</a>
+    <a href="{% url 'items:delete_category' category.slug %}" class="btn btn-sm btn-danger">Delete</a>
+</p>
+{% endif %}
+{% endblock content %}

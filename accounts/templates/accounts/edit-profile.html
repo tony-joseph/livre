@@ -1,0 +1,83 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Edit Profile | Livre</title>
+{% endblock head %}
+
+{% block  content %}
+<div class="page-header">
+    <h1>Edit Profile</h1>
+</div>
+<form action="" method="post">
+    {% include 'includes/message-alert.html' %}
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_first_name">{{ form.first_name.label }}</label>
+        {% if form.first_name.errors %}<p>{{ form.first_name.errors.as_text }}</p>{% endif %}
+        {{ form.first_name }}
+    </div>
+    <div class="form-group">
+        <label for="id_last_name">{{ form.last_name.label }}</label>
+        {% if form.last_name.errors %}<p>{{ form.last_name.errors.as_text }}</p>{% endif %}
+        {{ form.last_name }}
+    </div>
+    <div class="form-group">
+        <label for="id_gender">{{ form.gender.label }}</label>
+        {% if form.gender.errors %}<p>{{ form.gender.errors.as_text }}</p>{% endif %}
+        {{ form.gender }}
+    </div>
+    <div class="form-group">
+        <label for="id_birthday">{{ form.birthday.label }}</label>
+        {% if form.birthday.errors %}<p>{{ form.birthday.errors.as_text }}</p>{% endif %}
+        {{ form.birthday }}
+    </div>
+    <div class="form-group">
+        <label for="id_gender">{{ form.gender.label }}</label>
+        {% if form.gender.errors %}<p>{{ form.gender.errors.as_text }}</p>{% endif %}
+        {{ form.gender }}
+    </div>
+    <div class="form-group">
+        <label for="id_phone">{{ form.phone.label }}</label>
+        {% if form.phone.errors %}<p>{{ form.phone.errors.as_text }}</p>{% endif %}
+        {{ form.phone }}
+    </div>
+    <div class="form-group">
+        <label for="id_city">{{ form.city.label }}</label>
+        {% if form.city.errors %}<p>{{ form.city.errors.as_text }}</p>{% endif %}
+        {{ form.city }}
+    </div>
+    <div class="form-group">
+        <label for="id_state">{{ form.state.label }}</label>
+        {% if form.state.errors %}<p>{{ form.state.errors.as_text }}</p>{% endif %}
+        {{ form.state }}
+    </div>
+    <div class="form-group">
+        <label for="id_country">{{ form.country.label }}</label>
+        {% if form.country.errors %}<p>{{ form.country.errors.as_text }}</p>{% endif %}
+        {{ form.country }}
+    </div>
+    <div class="form-group">
+        <label for="id_zip_code">{{ form.zip_code.label }}</label>
+        {% if form.zip_code.errors %}<p>{{ form.zip_code.errors.as_text }}</p>{% endif %}
+        {{ form.zip_code }}
+    </div>
+    <button type="submit" class="btn btn-primary">Update Profile</button>
+</form>
+{% endblock content %}
+
+{% block footer %}
+<script>
+    $(function() {
+        $('#id_first_name').val('{{ user.first_name }}');
+        $('#id_last_name').val('{{ user.last_name }}');
+        $('#id_email').val('{{ user.email }}');
+        $('#id_gender').val('{{ user_profile.gender }}');
+        $('#id_birthday').val('{{ user_profile.birthday }}');
+        $('#id_phone').val('{{ user_profile.phone }}');
+        $('#id_city').val('{{ user_profile.city }}');
+        $('#id_state').val('{{ user_profile.state }}');
+        $('#id_country').val('{{ user_profile.country }}');
+        $('#id_zip_code').val('{{ user_profile.zip_code }}');
+    });
+</script>
+{% endblock footer %}

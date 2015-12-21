@@ -1,0 +1,26 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Issue Book | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Issue Book</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_username">{{ form.username.label }}</label>
+        <p>Enter the username of the user to issue book.</p>
+        {{ form.username }}
+    </div>
+    <div class="form-group">
+        <label for="id_book_id">{{ form.book_id.label }}</label>
+        <p>Enter the ID of the book copy to be issued.</p>
+        {{ form.book_id }}
+    </div>
+    <button type="submit" class="btn btn-primary">Issue Book</button>
+</form>
+{% endblock content %}

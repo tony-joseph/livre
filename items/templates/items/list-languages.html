@@ -1,0 +1,20 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Languages | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Languages</h1>
+</div>
+{% if user.is_staff %}<p><a href="{% url 'items:add_language' %}" class="btn btn-default btn-sm">Add New Language</a></p>{% endif %}
+{% for language in languages %}
+<h3><a href="{{ language.get_absolute_url }}">{{ language.name }}</a></h3>
+<p>Code: {{ language.short_code }}</p>
+<p>{{ language.description |linebreaksbr |truncatechars:200 }}</p>
+<hr />
+{% empty %}
+<p>No categories found.</p>
+{% endfor %}
+{% endblock content %}

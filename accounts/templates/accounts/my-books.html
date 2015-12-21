@@ -1,0 +1,43 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>My Books | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>My Books</h1>
+</div>
+{% if circulations %}
+<table class="table table-hover table-striped table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Book</th>
+        <th>Status</th>
+        <th>Issued on</th>
+        <th>Due date</th>
+        <th>Returned on</th>
+    </tr>
+    {% for circulation in circulations %}
+    <tr>
+        <td>{{ circulation.id }}</td>
+        <td><a href="{{ circulation.book_copy.get_absolute_url }}">{{ circulation.book_copy.book_detail.title }}</a> </td>
+        <td>{{ circulation.get_status }}</td>
+        <td>{{ circulation.issued_on |date:'d F Y' }}</td>
+        <td>{{ circulation.due_date |date:'d F Y' }}</td>
+        <td>{{ circulation.returned_on |date:'d F Y' }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% if circulations.has_previous or circulations.has_next %}
+<nav>
+    <ul class="pager">
+        {% if circulations.has_previous %}<li class="previous"><a href="{% url 'accounts:my_books' %}?page={{ circulations.previous_page_number }}&filte={{ filter }}"><span aria-hidden="true">&larr;</span> Previous</a>{% endif %}
+        {% if circulations.has_next %}<li class="next"><a href="{% url 'accounts:my_books' %}?page={{ circulations.next_page_number }}&filte={{ filter }}">Next <span aria-hidden="true">&rarr;</span></a>{% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% else %}
+<p>There are no books.</p>
+{% endif %}
+{% endblock content %}

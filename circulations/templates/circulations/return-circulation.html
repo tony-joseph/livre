@@ -1,0 +1,21 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Return Book | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Return Book</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_book_id">{{ form.book_id.label }}</label>
+        <p>Enter the ID of the book copy to be returned.</p>
+        {{ form.book_id }}
+    </div>
+    <button type="submit" class="btn btn-primary">Return Book</button>
+</form>
+{% endblock content %}

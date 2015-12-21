@@ -1,0 +1,36 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Add User | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Add User</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_first_name">{{ form.first_name.label }}</label>
+        {% if form.first_name.errors %}<p class="text-danger">{{ form.first_name.errors.as_text }}</p>{% endif %}
+        {{ form.first_name }}
+    </div>
+    <div class="form-group">
+        <label for="id_last_name">{{ form.last_name.label }}</label>
+        {% if form.last_name.errors %}<p class="text-danger">{{ form.last_name.errors.as_text }}</p>{% endif %}
+        {{ form.last_name }}
+    </div>
+    <div class="form-group">
+        <label for="id_username">{{ form.username.label }}</label>
+        {% if form.username.errors %}<p class="text-danger">{{ form.username.errors.as_text }}</p>{% endif %}
+        {{ form.username }}
+    </div>
+    <div class="form-group">
+        <label for="id_password">{{ form.password.label }}</label>
+        {% if form.password.errors %}<p class="text-danger">{{ form.password.errors.as_text }}</p>{% endif %}
+        {{ form.password }}
+    </div>
+    <button type="submit" class="btn btn-primary">Add User</button>
+</form>
+{% endblock content %}

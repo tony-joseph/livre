@@ -1,0 +1,33 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Edit {{ language.name }} | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Edit {{ language.name }}</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+<p>Fields marked with * are required.</p>
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_name">{{ form.name.label }}</label>
+        {% if form.name.errors %}<p class="text-danger">{{ form.name.errors.as_text }}</p>{% endif %}
+        <input type="text" class="form-control" name="name" id="id_name" placeholder="Name" value="{{ language.name }}" />
+    </div>
+    <div class="form-group">
+        <label for="id_short_code">{{ form.short_code.label }}</label>
+        {% if form.short_code.errors %}<p class="text-danger">{{ form.short_code.errors.as_text }}</p>{% endif %}
+        <input type="text" class="form-control" name="short_code" id="id_short_code" placeholder="short_code" value="{{ language.short_code }}" />
+    </div>
+    <div class="form-group">
+        <label for="id_description">{{ form.description.label }}</label>
+        {% if form.description.errors %}<p class="text-danger">{{ form.description.errors.as_text }}</p>{% endif %}
+        <textarea class="form-control" name="description" placeholder="Description" id="id_description" rows="5">{{ language.description }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a class="btn btn-default" href="{{ language.get_absolute_url }}">Cancel</a>
+</form>
+{% endblock content %}

@@ -1,0 +1,62 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Circulations | Livre</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Circulations</h1>
+</div>
+<p>Showing {% if filter == 'all' %}all items{% elif filter == 'due' %}items on due{% else %}items on circulation{% endif %}</p>
+<table class="table table-hover table-striped table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Book</th>
+        <th>User</th>
+        <th>Issue Date</th>
+        <th>Due Date</th>
+        <th>Status</th>
+    </tr>
+    {% for circulation in circulations_list %}
+    <tr>
+        <td>{{ circulation.book_copy.id }}</td>
+        <td><a href="{{ circulation.book_copy.get_absolute_url }}">{{ circulation.book_copy.book_detail.title }}</a></td>
+        <td><a href="{% url 'accounts:view_user_profile' circulation.user.username %}">{{ circulation.user.get_full_name }}</a></td>
+        <td>{{ circulation.issued_on |date:'d F Y' }}</td>
+        <td>{{ circulation.due_date |date:'d F Y' }}</td>
+        <td>{{ circulation.get_status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% if circulations_list.has_previous or circulations_list.has_next %}
+<nav>
+    <ul class="pager">
+        {% if circulations_list.has_previous %}<li class="previous"><a href="{% url 'circulations:circulations' %}?page={{ circulations_list.previous_page_number }}&filte={{ filter }}"><span aria-hidden="true">&larr;</span> Previous</a>{% endif %}
+        {% if circulations_list.has_next %}<li class="next"><a href="{% url 'circulations:circulations' %}?page={{ circulations_list.next_page_number }}&filte={{ filter }}">Next <span aria-hidden="true">&rarr;</span></a>{% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock content %}
+
+{% block sidebar %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Filter</h4>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item"><a href="?filter=all">All</a></li>
+        <li class="list-group-item"><a href="?filter=on-circulation">On Circulation</a></li>
+        <li class="list-group-item"><a href="?filter=due">On Due</a></li>
+    </ul>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Quick Links</h4>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item"><a href="{% url 'circulations:add_circulation' %}">Issue book</a></li>
+        <li class="list-group-item"><a href="{% url 'circulations:return_circulation' %}">Return book</a></li>
+    </ul>
+</div>
+{% endblock sidebar %}
