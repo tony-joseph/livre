@@ -33,8 +33,8 @@ class ProfileForm(forms.Form):
         'class': 'form-control', 'placeholder': 'State', }))
     country = forms.CharField(label='Country:', max_length=150, required=False, widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'Country', }))
-    zip_code = forms.CharField(label='State:', max_length=8, required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'State', }))
+    zip_code = forms.CharField(label='Zip code:', max_length=8, required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Zip code', }))
 
 
 class AddUserForm(forms.Form):
