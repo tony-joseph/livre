@@ -23,7 +23,7 @@ class ProfileForm(forms.Form):
         'class': 'form-control'}, choices=GENDER_CHOICES))
     email = forms.EmailField(label='Email:', required=False, widget=forms.EmailInput(attrs={
         'class': 'form-control', 'placeholder': 'Email', }))
-    birthday = forms.DateField(label='Birthday:', required=False, widget=forms.TextInput(attrs={
+    birthday = forms.DateField(label='Birthday (YYYY-MM-DD):', required=False, widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'Birthday', }))
     phone = forms.CharField(label='Phone:', max_length=20, min_length=6, required=False, widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'Phone', }))
