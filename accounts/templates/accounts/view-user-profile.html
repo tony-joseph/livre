@@ -6,17 +6,18 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>{{ user.get_full_name }}</h1>
+    <h1>{{ user_detail.get_full_name }}</h1>
 </div>
+{% include 'includes/message-alert.html' %}
 <img src="http://www.gravatar.com/avatar/{{ gravathar_hash }}" class="img-thumbnail profile-pic profile-pic-md" />
 <table class="table table-striped">
     <tr>
         <td>First name</td>
-        <td>: {{ user.first_name }}</td>
+        <td>: {{ user_detail.first_name }}</td>
     </tr>
     <tr>
         <td>Last name</td>
-        <td>: {{ user.last_name }}</td>
+        <td>: {{ user_detail.last_name }}</td>
     </tr>
     <tr>
         <td>Gender</td>
@@ -28,7 +29,7 @@
     </tr>
     <tr>
         <td>Email</td>
-        <td>: {{ user.email }}</td>
+        <td>: {{ user_detail.email }}</td>
     </tr>
     <tr>
         <td>Phone</td>
@@ -49,5 +50,9 @@
         <td>: {{ user_profile.zipcode }}</td>
     </tr>
 </table>
-<p><a class="btn btn-danger btn-sm" href="{% url 'accounts:remove_user' user_detail.username %}">Remove User</a></p>
+<p>
+    <a class="btn btn-danger btn-sm" href="{% url 'accounts:remove_user' user_detail.username %}">Remove User</a>
+    {% if is_admin %}<a class="btn btn-primary btn-sm" href="{% url 'accounts:change_staff_status' user_detail.username %}">{% if user_detail.is_staff %}Remove from staffs{% else %}Add to staffs{% endif %}</a>
+    <a class="btn btn-primary btn-sm" href="{% url 'accounts:change_admin_status' user_detail.username %}">{% if user_detail.is_superuser %}Remove from admins{% else %}Add to admins{% endif %}</a>{% endif %}
+</p>
 {% endblock content %}

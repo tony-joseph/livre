@@ -16,5 +16,11 @@ urlpatterns = [
 
     url(r'^users/(?P<username>[-a-zA-Z0-9_]+)/remove/$', views.remove_user, name='remove_user'),
 
+    url(r'^users/(?P<username>[-a-zA-Z0-9_]+)/change-staff-status/$', views.change_staff_status,
+        name='change_staff_status'),
+
+    url(r'^users/(?P<username>[-a-zA-Z0-9_]+)/change-admin-status/$', views.change_admin_status,
+        name='change_admin_status'),
+
     url(r'^my-books/$', views.my_books, name='my_books'),
 ]

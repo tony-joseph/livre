@@ -12,7 +12,7 @@ from django.db import IntegrityError
 from .models import UserProfile
 from circulations.models import BookCirculation
 from .forms import LoginForm, ProfileForm, AddUserForm, RemoveUserForm
-from .helpers import is_staff
+from .helpers import is_staff, is_admin
 
 
 def login_user(request):
@@ -146,6 +146,7 @@ def view_user_profile(request, username):
     context = {
         'user_detail': user_detail,
         'user_profile': user_profile,
+        'is_admin': is_admin(user=request.user),
     }
     return render(request, 'accounts/view-user-profile.html', context)
 
@@ -172,6 +173,41 @@ def remove_user(request, username):
         form = RemoveUserForm()
 
     return render(request, 'accounts/remove-user.html', {'form': form, 'user_detail': user_detail})
+
+
+@login_required
+@user_passes_test(is_admin)
+def change_staff_status(request, username):
+    """View to change the is_staff field in user model."""
+
+    user_detail = User.objects.get(username=username)
+
+    if user_detail.is_superuser:
+        messages.add_message(request, messages.ERROR, "This user is an admin. Please remove from admins first.")
+    else:
+        user_detail.is_staff = not user_detail.is_staff
+        user_detail.save()
+        messages.add_message(request, messages.SUCCESS, "Status updated.")
+
+    return redirect(reverse('accounts:view_user_profile', kwargs={'username': username}))
+
+
+@login_required
+@user_passes_test(is_admin)
+def change_admin_status(request, username):
+    """View to change the is_superuser field in user model."""
+
+    user_detail = User.objects.get(username=username)
+
+    if user_detail.username == request.user.username:
+        messages.add_message(request, messages.ERROR, "You cannot update your status.")
+    else:
+        user_detail.is_superuser = not user_detail.is_superuser
+        user_detail.is_staff = user_detail.is_superuser
+        user_detail.save()
+        messages.add_message(request, messages.SUCCESS, "Status updated.")
+
+    return redirect(reverse('accounts:view_user_profile', kwargs={'username': username}))
 
 
 @login_required
