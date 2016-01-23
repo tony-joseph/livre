@@ -20,3 +20,11 @@ FINE_PER_DAY = 0.0
 # Currency to be used when collecting fines.
 
 CURRENCY = 'INR'
+
+
+# Website configuration
+
+SITE_CONFIG = {
+    'SITE_NAME': 'Livre',
+    'SITE_DESCRIPTION': 'Livre Library Management System',
+}

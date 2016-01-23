@@ -73,6 +73,8 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATES[0]['OPTIONS']['context_processors'].append("livre.context_processors.site_config_processor")
+
 WSGI_APPLICATION = 'livre.wsgi.application'
 
 

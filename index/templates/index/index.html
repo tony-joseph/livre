@@ -1,7 +1,8 @@
 {% extends 'layouts/site-layout.html' %}
 
 {% block head %}
-<title>Home | Livre</title>
+<title>Home | {{ SITE_CONFIG.SITE_NAME }}</title>
+<meta name="description" content="{{ SITE_CONFIG.SITE_DESCRIPTION }}">
 {% endblock head %}
 
 {% block content %}
