@@ -11,8 +11,9 @@ from django.db import IntegrityError
 
 from .models import UserProfile
 from circulations.models import BookCirculation
-from .forms import LoginForm, ProfileForm, AddUserForm, RemoveUserForm
+from .forms import LoginForm, ProfileForm, AddUserForm, RemoveUserForm, RegisterForm
 from .helpers import is_staff, is_admin
+from livre.config import ALLOW_USER_REGISTRATION
 
 
 def login_user(request):
@@ -43,6 +44,49 @@ def login_user(request):
         'next': request.GET.get('next'),
     }
     return render(request, 'accounts/login.html', context)
+
+
+def register(request):
+    """ View to register a normal user account.
+    """
+
+    if not ALLOW_USER_REGISTRATION:
+        return render(request, 'accounts/registration-not-allowed.html')
+
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            username = form.cleaned_data['username'].lower()
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            confirm_password = form.cleaned_data['confirm_password']
+
+            if password == confirm_password:
+                try:
+                    user = User.objects.create_user(
+                        username=username,
+                        email=email,
+                        password=password,
+                        first_name=first_name,
+                        last_name=last_name,
+                    )
+                except IntegrityError:
+                    messages.add_message(request, messages.ERROR, "This username is not available.")
+                else:
+                    messages.add_message(request, messages.SUCCESS,
+                                         "Registration successful. Please log in to continue")
+                    return redirect(reverse('login'))
+            else:
+                messages.add_message(request, messages.ERROR, "Password do not match. Please check.")
+    else:
+        form = RegisterForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts/register.html', context)
 
 
 @login_required

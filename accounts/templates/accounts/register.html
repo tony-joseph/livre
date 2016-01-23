@@ -1,0 +1,51 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Register New Account | {{ SITE_CONFIG.SITE_NAME }}</title>
+{% endblock head %}
+
+{% block content %}
+<div class="well">
+<div class="page-header">
+    <h1 class="text-primary">Register New Account</h1>
+</div>
+<form action="" method="post">
+    {% include 'includes/message-alert.html' %}
+    {% csrf_token %}
+    <div class="form-group{% if form.first_name.errors %} has-error{% endif %}">
+        <label for="id_first_name">{{ form.first_name.label }}</label>
+        {% if form.first_name.errors %}<p class="text-danger">{{ form.first_name.errors.as_text }}</p>{% endif %}
+        {{ form.first_name }}
+    </div>
+    <div class="form-group{% if form.last_name.errors %} has-error{% endif %}">
+        <label for="id_last_name">{{ form.last_name.label }}</label>
+        {% if form.last_name.errors %}<p class="text-danger">{{ form.last_name.errors.as_text }}</p>{% endif %}
+        {{ form.last_name }}
+    </div>
+    <div class="form-group{% if form.username.errors %} has-error{% endif %}">
+        <label for="id_username">{{ form.username.label }}</label>
+        <p>Username should only contain letters, numbers, hyphens(-) and underscores(_).</p>
+        {% if form.username.errors %}<p class="text-danger">{{ form.username.errors.as_text }}</p>{% endif %}
+        {{ form.username }}
+    </div>
+    <div class="form-group{% if form.email.errors %} has-error{% endif %}">
+        <label for="id_email">{{ form.email.label }}</label>
+        <p>An email address is not required to register an account. You will not be able to reset your password without an email address</p>
+        {% if form.email.errors %}<p class="text-danger">{{ form.email.errors.as_text }}</p>{% endif %}
+        {{ form.email }}
+    </div>
+    <div class="form-group{% if form.password.errors %} has-error{% endif %}">
+        <label for="id_password">{{ form.password.label }}</label>
+        {% if form.password.errors %}<p class="text-danger">{{ form.password.errors.as_text }}</p>{% endif %}
+        {{ form.password }}
+    </div>
+    <div class="form-group{% if form.confirm_password.errors %} has-error{% endif %}">
+        <label for="id_confirm_password">{{ form.confirm_password.label }}</label>
+        {% if form.confirm_password.errors %}<p class="text-danger">{{ form.confirm_password.errors.as_text }}</p>{% endif %}
+        {{ form.confirm_password }}
+    </div>
+    <button type="submit" class="btn btn-primary">Register Account</button>
+    <a class="btn btn-default" href="{% url 'login' %}">Log In</a>
+</form>
+</div>
+{% endblock content %}

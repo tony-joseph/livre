@@ -22,6 +22,11 @@ FINE_PER_DAY = 0.0
 CURRENCY = 'INR'
 
 
+# Accounts configuration
+
+ALLOW_USER_REGISTRATION = True
+
+
 # Website configuration
 
 SITE_CONFIG = {

@@ -1,0 +1,13 @@
+{% extends 'layouts/site-layout.html' %}
+
+{% block head %}
+<title>Registration Not Allowed | {{ SITE_CONFIG.SITE_NAME }}</title>
+{% endblock head %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Registration Not Allowed</h1>
+</div>
+{% include 'includes/message-alert.html' %}
+<p>User registration is not allowed now. Please try again later or contact administrator.</p>
+{% endblock content %}

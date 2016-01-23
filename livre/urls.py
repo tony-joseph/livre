@@ -34,6 +34,8 @@ urlpatterns = [
         'template_name': 'accounts/logout.html',
     }, name='logout'),
 
+    url(r'^accounts/register/$', accounts_views.register, name='register'),
+
     url(r'^accounts/password-change/$', auth_views.password_change, {
         'template_name': 'accounts/password-change.html',
     }, name='password_change'),
