@@ -201,6 +201,27 @@ def delete_language(request, slug):
     return redirect(reverse('items:list_languages'))
 
 
+def language_books(request, slug):
+    """View to display paginated list of books in the language."""
+
+    language = get_object_or_404(Language, short_code=slug)
+    book_details = BookDetail.objects.filter(language=language)
+    page = request.GET.get('page')
+    paginator = Paginator(book_details, 50)
+    try:
+        book_details = paginator.page(page)
+    except PageNotAnInteger:
+        book_details = paginator.page(1)
+    except EmptyPage:
+        book_details = paginator.page(paginator.num_pages)
+
+    context = {
+        'book_details': book_details,
+        'language': language,
+    }
+    return render(request, 'items/language-books.html', context)
+
+
 @login_required
 def add_book_detail(request):
     """View to add a new detail."""

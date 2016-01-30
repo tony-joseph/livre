@@ -26,6 +26,8 @@ urlpatterns = [
 
     url(r'^languages/(?P<slug>[-a-zA-Z0-9_]+)/delete/$', views.delete_language, name='delete_language'),
 
+    url(r'^languages/(?P<slug>[-a-zA-Z0-9_]+)/books/$', views.language_books, name='language_books'),
+
     url(r'^books/$', views.list_book_details, name='list_book_details'),
 
     url(r'^books/add/$', views.add_book_detail, name='add_book_detail'),
