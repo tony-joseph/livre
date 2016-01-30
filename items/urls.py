@@ -14,6 +14,8 @@ urlpatterns = [
 
     url(r'^categories/(?P<slug>[-a-zA-Z0-9_]+)/delete/$', views.delete_category, name='delete_category'),
 
+    url(r'^categories/(?P<slug>[-a-zA-Z0-9_]+)/books/$', views.category_books, name='category_books'),
+
     url(r'^languages/$', views.list_languages, name='list_languages'),
 
     url(r'^languages/add/$', views.add_language, name='add_language'),

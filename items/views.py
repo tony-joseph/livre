@@ -95,6 +95,28 @@ def delete_category(request, slug):
 
 
 @login_required
+def category_books(request, slug):
+    """View to display paginated list of books in the category."""
+
+    category = get_object_or_404(Category, slug=slug)
+    book_details = BookDetail.objects.filter(category=category)
+    page = request.GET.get('page')
+    paginator = Paginator(book_details, 50)
+    try:
+        book_details = paginator.page(page)
+    except PageNotAnInteger:
+        book_details = paginator.page(1)
+    except EmptyPage:
+        book_details = paginator.page(paginator.num_pages)
+
+    context = {
+        'book_details': book_details,
+        'category': category,
+    }
+    return render(request, 'items/category-books.html', context)
+
+
+@login_required
 def add_language(request):
     """View to add a new language."""
 
