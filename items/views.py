@@ -94,7 +94,6 @@ def delete_category(request, slug):
     return redirect(reverse('items:categories'))
 
 
-@login_required
 def category_books(request, slug):
     """View to display paginated list of books in the category."""
 

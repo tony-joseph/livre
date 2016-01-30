@@ -40,10 +40,11 @@
         <td>: {{ category.updated_on }}</td>
     </tr>
 </table>
-{% if user.is_staff %}
 <p>
-    <a href="{% url 'items:edit_category' category.slug %}" class="btn btn-sm btn-primary">Edit</a>
-    <a href="{% url 'items:delete_category' category.slug %}" class="btn btn-sm btn-danger">Delete</a>
+    <a href="{% url 'items:category_books' category.slug %}" class="btn btn-sm btn-primary">Books in {{ category.title }}</a>
+    {% if user.is_staff %}
+    <a href="{% url 'items:edit_category' category.slug %}" class="btn btn-sm btn-default">Edit</a>
+    <a href="{% url 'items:delete_category' category.slug %}" class="btn btn-sm btn-default">Delete</a>
+    {% endif %}
 </p>
-{% endif %}
 {% endblock content %}
